@@ -515,6 +515,17 @@
                 padding: 50px 30px;
             }
 
+            #photoBox {
+                cursor: pointer;
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+            
+            #photoBox:hover {
+                transform: scale(1.03);
+                box-shadow: 0 30px 80px rgba(255, 107, 157, 0.6);
+            }
+
+
             .photo-caption {
                 font-size: 22px;
                 margin-top: 20px;
@@ -588,9 +599,17 @@
     <!-- PANTALLA 4: FOTO DE LA PAREJA -->
     <div id="screen4">
         <div class="photo-frame">
-            <div class="photo-placeholder">
-                Aquí puedes agregar<br>una foto de ustedes<br>❤️
+            <!-- Input oculto -->
+            <input type="file" id="photoInput" accept="image/*" hidden>
+        
+            <!-- Recuadro clickeable -->
+            <div class="photo-placeholder" id="photoBox">
+                Toca aquí para agregar<br>una foto de ustedes ❤️
             </div>
+        
+            <!-- Imagen real -->
+            <img id="couplePhoto" class="couple-photo" style="display:none;">
+        
             <div class="photo-caption">Para siempre juntos 💕</div>
         </div>
     </div>
@@ -734,8 +753,34 @@
                 document.body.addEventListener('click', () => video.play(), { once: true });
             });
         });
+        const photoInput = document.getElementById('photoInput');
+        const photoBox = document.getElementById('photoBox');
+        const couplePhoto = document.getElementById('couplePhoto');
+        
+        // abrir selector
+        photoBox.addEventListener('click', () => {
+            photoInput.click();
+        });
+        
+        // mostrar imagen
+        photoInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if (!file) return;
+        
+            const reader = new FileReader();
+        
+            reader.onload = function(e) {
+                couplePhoto.src = e.target.result;
+                couplePhoto.style.display = 'block';
+                photoBox.style.display = 'none';
+            };
+        
+            reader.readAsDataURL(file);
+        });
+
     </script>
 </body>
 </html>
+
 
 
