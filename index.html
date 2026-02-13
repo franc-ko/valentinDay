@@ -546,7 +546,7 @@
     <!-- PANTALLA 1: VIDEO INTRO -->
     <div id="screen1">
         <div class="video-wrapper">
-            <video id="introVideo" playsinline autoplay muted>
+            <video id="introVideo" playsinline autoplay muted preload="auto">
                 <source src="video.mp4" type="video/mp4">
             </video>
             <div class="video-text" id="videoText1">
@@ -726,6 +726,15 @@
                 e.preventDefault();
             }
         }, { passive: false });
+        // Forzar reproducción en GitHub Pages / móviles
+        window.addEventListener('load', () => {
+            video.muted = true;
+            video.play().catch(() => {
+                // Si el navegador bloquea autoplay, al tocar la pantalla inicia
+                document.body.addEventListener('click', () => video.play(), { once: true });
+            });
+        });
     </script>
 </body>
 </html>
+
