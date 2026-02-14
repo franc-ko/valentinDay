@@ -2,282 +2,472 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para ti ❤️</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Para Ti 💕</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            font-family: 'Georgia', 'Times New Roman', serif;
+            font-family: 'Quicksand', sans-serif;
             overflow: hidden;
-            background: #000;
-            width: 100vw;
+            background: linear-gradient(135deg, #FFB6C1 0%, #E6E6FA 50%, #FFDAB9 100%);
             height: 100vh;
+            height: 100dvh;
+            width: 100vw;
             position: fixed;
         }
 
-        /* PANTALLA 1 - VIDEO */
-        #screen1 {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(180deg, #ffd4e5 0%, #ffe8f0 30%, #fff5f7 60%, #ffc8e0 100%);
-            z-index: 1000;
-            opacity: 1;
-            transition: opacity 1s ease;
-        }
-
-        #screen1.fade-out {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .video-wrapper {
-            position: relative;
-            width: 100%;
-            max-width: 320px;
-            aspect-ratio: 9 / 16;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        #introVideo {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            display: block;
-            mix-blend-mode: normal;
-        }
-
-        .video-text {
+        /* Pantallas */
+        .screen {
             position: absolute;
-            bottom: 15%;
-            left: 50%;
-            transform: translateX(-50%);
-            color: white;
-            font-size: 18px;
-            font-weight: 600;
-            text-align: center;
-            text-shadow: 
-                0 4px 20px rgba(0, 0, 0, 0.95),
-                0 2px 8px rgba(0, 0, 0, 0.85),
-                0 1px 3px rgba(0, 0, 0, 0.9);
-            padding: 10px 25px;
-            z-index: 10;
-            opacity: 0;
-            transition: opacity 0.6s ease;
-            line-height: 1.5;
-            max-width: 85%;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 12px;
-            backdrop-filter: blur(8px);
-        }
-
-        .video-text.show {
-            opacity: 1;
-        }
-
-        /* Desktop adjustments */
-        @media (min-width: 769px) {
-            .video-wrapper {
-                max-width: 360px;
-            }
-
-            .video-text {
-                font-size: 19px;
-                padding: 12px 30px;
-            }
-        }
-
-        /* Mobile adjustments */
-        @media (max-width: 768px) {
-            .video-wrapper {
-                max-width: 300px;
-            }
-
-            .video-text {
-                font-size: 16px;
-                padding: 9px 22px;
-                bottom: 18%;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .video-wrapper {
-                max-width: 280px;
-            }
-
-            .video-text {
-                font-size: 15px;
-                padding: 8px 20px;
-                bottom: 20%;
-                max-width: 82%;
-            }
-        }
-
-        /* Very small screens */
-        @media (max-width: 360px) {
-            .video-wrapper {
-                max-width: 260px;
-            }
-
-            .video-text {
-                font-size: 14px;
-                padding: 7px 18px;
-                bottom: 22%;
-            }
-        }
-
-        /* Landscape mobile */
-        @media (max-height: 600px) and (orientation: landscape) {
-            .video-wrapper {
-                max-height: 85vh;
-                max-width: none;
-                width: auto;
-            }
-
-            .video-text {
-                font-size: 13px;
-                padding: 6px 15px;
-                bottom: 15%;
-            }
-        }
-
-        /* PANTALLA 2 - CARTA */
-        #screen2 {
-            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #ffdde1 0%, #fee5e8 50%, #fff5f7 100%);
             opacity: 0;
-            pointer-events: none;
-            transition: opacity 1s ease;
-            padding: 20px;
-            overflow-y: auto;
-        }
-
-        #screen2.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .letter-container {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            padding: 40px 30px;
-            max-width: 500px;
-            width: 100%;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
-            position: relative;
-            margin: auto;
-        }
-
-        .letter-text {
-            font-size: 16px;
-            line-height: 1.8;
-            color: #333;
-            text-align: justify;
-            margin-bottom: 30px;
-            opacity: 0;
-            animation: fadeInText 2s ease forwards;
-            animation-delay: 0.5s;
-        }
-
-        @keyframes fadeInText {
-            to {
-                opacity: 1;
-            }
-        }
-
-        .letter-text p {
-            margin-bottom: 18px;
-        }
-
-        .letter-signature {
-            text-align: right;
-            font-style: italic;
-            color: #d4567a;
-            margin-top: 30px;
-            font-size: 18px;
-        }
-
-        .surprise-button {
-            display: block;
-            margin: 30px auto 0;
-            padding: 15px 40px;
-            background: linear-gradient(135deg, #ff6b9d 0%, #ff8fab 100%);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            font-size: 16px;
-            font-family: 'Georgia', serif;
-            cursor: pointer;
-            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.3);
-            transition: all 0.3s ease;
-            opacity: 0;
-            animation: fadeInButton 1s ease forwards;
-            animation-delay: 2.5s;
-        }
-
-        .surprise-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 40px rgba(255, 107, 157, 0.4);
-        }
-
-        .surprise-button:active {
-            transform: translateY(0);
-        }
-
-        @keyframes fadeInButton {
-            to {
-                opacity: 1;
-            }
-        }
-
-        /* PANTALLA 3 - SORPRESA */
-        #screen3 {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #000;
+            visibility: hidden;
+            transition: opacity 1s ease, visibility 1s ease;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 1s ease;
-            overflow: hidden;
-            padding: 40px 20px;
         }
 
-        #screen3.active {
+        .screen.active {
             opacity: 1;
-            pointer-events: auto;
+            visibility: visible;
+            z-index: 10;
+        }
+
+        /* ========== PANTALLA 1: VIDEO KITTY ========== */
+        #screen1 {
+            background: linear-gradient(135deg, #FFE5EC 0%, #FFF0F5 50%, #FFE5F0 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            padding: 20px;
+        }
+
+        .video-container {
+            position: relative;
+            width: 90%;
+            max-width: 420px;
+            height: 60vh;
+            max-height: 550px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #FFF0F5;
+            border-radius: 30px;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.25);
+        }
+
+        #kittyVideo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 30px;
+        }
+
+        .video-overlay {
+            display: none;
+        }
+
+        .text-sequence {
+            position: relative;
+            text-align: center;
+            padding: 0 30px;
+            width: 100%;
+            max-width: 500px;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sequence-text {
+            font-size: 1.4rem;
+            color: #FF1493;
+            font-weight: 600;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transition: opacity 0.6s ease;
+            position: absolute;
+        }
+
+        .sequence-text.show {
+            opacity: 1;
+        }
+
+        .bottom-section {
+            position: relative;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .bottom-section .btn {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: opacity 1s ease, visibility 1s ease, transform 1s ease;
+        }
+
+        .bottom-section .btn.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        /* Floating particles */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            font-size: 1.2rem;
+            opacity: 0.6;
+            animation: float 8s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.3; }
+            100% { transform: translateY(-100vh) translateX(30px) rotate(360deg); opacity: 0; }
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 18px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(135deg, #FF69B4 0%, #FF1493 100%);
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(255, 105, 180, 0.4);
+            transition: all 0.3s ease;
+            font-family: 'Quicksand', sans-serif;
+            animation: breathing 2s infinite ease-in-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:active::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn:active {
+            transform: scale(0.95);
+        }
+
+        @keyframes breathing {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* ========== PANTALLA 2: CARTA ========== */
+        #screen2 {
+            background: linear-gradient(135deg, #FFB6C1 0%, #E6E6FA 50%, #FFDAB9 100%);
+            padding: 20px;
+        }
+
+        .letter-container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 30px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 70vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            position: relative;
+            opacity: 0;
+            transform: translateY(50px) scale(0.9);
+            transition: all 1s ease;
+        }
+
+        .letter-container.show {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .letter-container::before {
+            content: '💌';
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 3rem;
+        }
+
+        .letter-content {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #4A4A4A;
+            text-align: left;
+        }
+
+        .letter-content p {
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease;
+        }
+
+        .letter-content p.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .letter-signature {
+            margin-top: 15px;
+            font-size: 1.4rem;
+            color: #FF1493;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        /* ========== PANTALLA 3: VIDEO NOSOTROS + FLORES ========== */
+        #screen3 {
+            background: #000000;
+        }
+
+        .video-final-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .video-final {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 2s ease;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .video-final.active {
+            opacity: 1;
+            z-index: 5;
+        }
+
+        /* Contenedor de animación de flores */
+        .flowers-animation {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 2s ease;
+            pointer-events: none;
+            z-index: 15;
+        }
+
+        .flowers-animation.active {
+            opacity: 1;
+        }
+
+        /* Pétalos flotantes */
+        .petal {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+            filter: blur(0px);
+            z-index: 20;
+        }
+
+        /* Diferentes tipos de flores/pétalos */
+        .petal-rose {
+            width: 25px;
+            height: 25px;
+            background: radial-gradient(circle at 30% 30%, #ffb6c1, #ff69b4);
+            border-radius: 50% 0 50% 0;
+            box-shadow: 0 0 15px rgba(255, 182, 193, 0.4);
+        }
+
+        .petal-cherry {
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle at 40% 40%, #ffe5ec, #ffb6c1);
+            border-radius: 50% 50% 0 50%;
+            box-shadow: 0 0 12px rgba(255, 229, 236, 0.3);
+        }
+
+        .petal-sakura {
+            width: 18px;
+            height: 18px;
+            background: radial-gradient(circle at 50% 50%, #fff0f5, #ffc0cb);
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(255, 240, 245, 0.3);
+        }
+
+        .petal-small {
+            width: 12px;
+            height: 12px;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.8), rgba(255, 182, 193, 0.6));
+            border-radius: 50%;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+        }
+
+        /* Animación de caída etérea */
+        @keyframes floatPetal {
+            0% {
+                transform: translateY(-20px) translateX(0) rotate(0deg) scale(0);
+                opacity: 0;
+                filter: blur(1px);
+            }
+            5% {
+                opacity: 0.4;
+                filter: blur(0px);
+            }
+            10% {
+                transform: translateY(10vh) translateX(5px) rotate(30deg) scale(1);
+                opacity: 0.5;
+            }
+            50% {
+                opacity: 0.35;
+                filter: blur(0.5px);
+            }
+            100% {
+                transform: translateY(110vh) translateX(-20px) rotate(180deg) scale(0.8);
+                opacity: 0;
+                filter: blur(1px);
+            }
+        }
+
+        /* Flores que aparecen y se desvanecen en el centro */
+        .flower-bloom {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 1;
+            z-index: 15;
+        }
+
+        .flower-bloom::before,
+        .flower-bloom::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 182, 193, 0.15), transparent 70%);
+            border-radius: 50%;
+            animation: bloom 8s ease-in-out infinite;
+        }
+
+        .flower-bloom::after {
+            animation-delay: 4s;
+        }
+
+        @keyframes bloom {
+            0%, 100% {
+                transform: scale(0.5) rotate(0deg);
+                opacity: 0;
+            }
+            15% {
+                opacity: 0.4;
+            }
+            50% {
+                transform: scale(2.5) rotate(180deg);
+                opacity: 0.15;
+            }
+            85% {
+                opacity: 0.1;
+            }
+        }
+
+        /* Luz ambiental sutil */
+        .ambient-light {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 182, 193, 0.08), transparent);
+            opacity: 0;
+            animation: ambientGlow 6s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 12;
+        }
+
+        @keyframes ambientGlow {
+            0%, 100% { opacity: 0; transform: scale(0.8); }
+            50% { opacity: 0.2; transform: scale(1.2); }
+        }
+
+        .final-text {
+            position: absolute;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+            font-weight: 600;
+            color: white;
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.8),
+                         0 0 30px rgba(255, 182, 193, 0.4);
+            opacity: 0;
+            transition: opacity 1.5s ease;
+            text-align: center;
+            padding: 0 20px;
+            z-index: 100;
+        }
+
+        .final-text.show {
+            opacity: 1;
+        }
+
+        /* ========== PANTALLA 4: FUEGOS ARTIFICIALES ========== */
+        #screen4 {
+            background: #0A0E27;
+            overflow: hidden;
         }
 
         .fireworks-container {
             position: absolute;
             width: 100%;
             height: 100%;
-            pointer-events: none;
         }
 
         .firework {
@@ -285,502 +475,650 @@
             width: 4px;
             height: 4px;
             border-radius: 50%;
-            animation: fireworkAnimation 2s ease-out forwards;
+            opacity: 0;
         }
 
-        @keyframes fireworkAnimation {
-            0% {
-                transform: translate(0, 0);
-                opacity: 1;
-            }
-            100% {
-                transform: translate(var(--x), var(--y));
-                opacity: 0;
-            }
-        }
-
-        .heart-container {
-            position: relative;
-            z-index: 10;
-            text-align: center;
+        .love-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 20px;
-        }
-
-        .heart {
-            font-size: 140px;
-            color: #ff6b9d;
+            z-index: 100;
             opacity: 0;
-            filter: drop-shadow(0 0 20px rgba(255, 107, 157, 0.6));
-        }
-
-        .heart.show {
-            animation: heartAppear 1.5s ease forwards, heartPulse 3s ease-in-out infinite 1.5s;
-        }
-
-        @keyframes heartAppear {
-            0% {
-                opacity: 0;
-                transform: scale(0);
-            }
-            50% {
-                transform: scale(1.2);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        @keyframes heartPulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.1);
-            }
-        }
-
-        .love-text {
-            font-size: 48px;
-            color: white;
-            font-weight: bold;
-            letter-spacing: 8px;
-            opacity: 0;
-            text-shadow: 0 0 20px rgba(255, 107, 157, 0.5);
+            transition: opacity 1s ease;
         }
 
         .love-text.show {
-            animation: textAppear 1s ease forwards;
-            animation-delay: 1.8s;
+            opacity: 1;
         }
 
-        @keyframes textAppear {
-            to {
-                opacity: 1;
-            }
+        .love-heart {
+            font-size: 5rem;
+            animation: heartPulse 1.5s infinite ease-in-out;
         }
 
-        .final-surprise-button {
-            margin-top: 40px;
-            padding: 18px 45px;
-            background: linear-gradient(135deg, #ff6b9d 0%, #ff8fab 100%);
+        @keyframes heartPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+
+        .love-message {
+            font-size: 3.5rem;
+            font-weight: 700;
             color: white;
-            border: none;
-            border-radius: 50px;
-            font-size: 17px;
-            font-family: 'Georgia', serif;
-            cursor: pointer;
-            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.4);
-            transition: all 0.3s ease;
-            opacity: 0;
-            z-index: 10;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.8),
+                         0 0 60px rgba(255, 192, 203, 0.6);
         }
 
-        .final-surprise-button.show {
-            animation: fadeInButton 1s ease forwards;
-            animation-delay: 3.5s;
-        }
-
-        .final-surprise-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 40px rgba(255, 107, 157, 0.5);
-        }
-
-        .final-surprise-button:active {
-            transform: translateY(0);
-        }
-
-        /* PANTALLA 4 - FOTO DE LA PAREJA */
-        #screen4 {
-            position: fixed;
-            top: 0;
-            left: 0;
+        .fireworks-container {
+            position: absolute;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+
+        .firework {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            opacity: 0;
+        }
+
+        .love-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            z-index: 100;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        .love-text.show {
+            opacity: 1;
+        }
+
+        .love-heart {
+            font-size: 5rem;
+            animation: heartPulse 1.5s infinite ease-in-out;
+        }
+
+        @keyframes heartPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+
+        .love-message {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.8),
+                         0 0 60px rgba(255, 192, 203, 0.6);
+        }
+
+        /* ========== PANTALLA 4: VIDEO + ANIMACIÓN FLORES ========== */
+        #screen4 {
+            background: #000000;
+        }
+
+        .video-final-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+
+        .video-final {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 2s ease;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .video-final.active {
+            opacity: 1;
+            z-index: 5;
+        }
+
+        /* Contenedor de animación de flores */
+        .flowers-animation {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 2s ease;
+            pointer-events: none;
+            z-index: 15;
+        }
+
+        .flowers-animation.active {
+            opacity: 1;
+        }
+
+        /* Pétalos flotantes */
+        .petal {
+            position: absolute;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 1.5s ease;
-            padding: 30px;
+            filter: blur(0px);
+            z-index: 20;
         }
 
-        #screen4.active {
+        /* Diferentes tipos de flores/pétalos */
+        .petal-rose {
+            width: 25px;
+            height: 25px;
+            background: radial-gradient(circle at 30% 30%, #ffb6c1, #ff69b4);
+            border-radius: 50% 0 50% 0;
+            box-shadow: 0 0 15px rgba(255, 182, 193, 0.4);
+        }
+
+        .petal-cherry {
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle at 40% 40%, #ffe5ec, #ffb6c1);
+            border-radius: 50% 50% 0 50%;
+            box-shadow: 0 0 12px rgba(255, 229, 236, 0.3);
+        }
+
+        .petal-sakura {
+            width: 18px;
+            height: 18px;
+            background: radial-gradient(circle at 50% 50%, #fff0f5, #ffc0cb);
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(255, 240, 245, 0.3);
+        }
+
+        .petal-small {
+            width: 12px;
+            height: 12px;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.8), rgba(255, 182, 193, 0.6));
+            border-radius: 50%;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+        }
+
+        /* Animación de caída etérea */
+        @keyframes floatPetal {
+            0% {
+                transform: translateY(-20px) translateX(0) rotate(0deg) scale(0);
+                opacity: 0;
+                filter: blur(1px);
+            }
+            5% {
+                opacity: 0.4;
+                filter: blur(0px);
+            }
+            10% {
+                transform: translateY(10vh) translateX(5px) rotate(30deg) scale(1);
+                opacity: 0.5;
+            }
+            50% {
+                opacity: 0.35;
+                filter: blur(0.5px);
+            }
+            100% {
+                transform: translateY(110vh) translateX(-20px) rotate(180deg) scale(0.8);
+                opacity: 0;
+                filter: blur(1px);
+            }
+        }
+
+        /* Flores que aparecen y se desvanecen en el centro */
+        .flower-bloom {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             opacity: 1;
-            pointer-events: auto;
+            z-index: 15;
         }
 
-        .photo-frame {
-            max-width: 600px;
+        .flower-bloom::before,
+        .flower-bloom::after {
+            content: '';
+            position: absolute;
             width: 100%;
-            text-align: center;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 182, 193, 0.15), transparent 70%);
+            border-radius: 50%;
+            animation: bloom 8s ease-in-out infinite;
         }
 
-        .couple-photo {
-            max-width: 100%;
-            max-height: 70vh;
-            border-radius: 25px;
-            box-shadow: 0 25px 70px rgba(255, 107, 157, 0.5);
-            object-fit: contain;
+        .flower-bloom::after {
+            animation-delay: 4s;
         }
 
-        .photo-placeholder {
-            background: linear-gradient(135deg, #ff6b9d 0%, #ff8fab 100%);
-            padding: 80px 50px;
-            border-radius: 25px;
-            text-align: center;
-            color: white;
-            font-size: 26px;
-            line-height: 1.8;
-            box-shadow: 0 25px 70px rgba(255, 107, 157, 0.4);
+        @keyframes bloom {
+            0%, 100% {
+                transform: scale(0.5) rotate(0deg);
+                opacity: 0;
+            }
+            15% {
+                opacity: 0.4;
+            }
+            50% {
+                transform: scale(2.5) rotate(180deg);
+                opacity: 0.15;
+            }
+            85% {
+                opacity: 0.1;
+            }
         }
 
-        .photo-caption {
-            margin-top: 30px;
-            font-size: 28px;
-            color: white;
-            font-style: italic;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        /* Luz ambiental sutil */
+        .ambient-light {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 182, 193, 0.08), transparent);
             opacity: 0;
-            animation: textAppear 1s ease forwards;
-            animation-delay: 1s;
+            animation: ambientGlow 6s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 12;
         }
 
-        /* Responsive adjustments for other screens */
+        @keyframes ambientGlow {
+            0%, 100% { opacity: 0; transform: scale(0.8); }
+            50% { opacity: 0.2; transform: scale(1.2); }
+        }
+
+        .final-text {
+            position: absolute;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+            font-weight: 600;
+            color: white;
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.8),
+                         0 0 30px rgba(255, 182, 193, 0.4);
+            opacity: 0;
+            transition: opacity 1.5s ease;
+            text-align: center;
+            padding: 0 20px;
+            z-index: 100;
+        }
+
+        .final-text.show {
+            opacity: 1;
+        }
+
+        /* Responsive */
+        @media (max-width: 380px) {
+            .sequence-text { font-size: 1.3rem; }
+            .letter-content { font-size: 1.05rem; }
+            .love-message { font-size: 2.8rem; }
+            .love-heart { font-size: 4rem; }
+            .final-text { font-size: 1.6rem; }
+        }
+
         @media (max-width: 768px) {
-            .letter-container {
-                padding: 35px 28px;
-            }
-
-            .letter-text {
-                font-size: 15px;
-            }
-
-            .heart {
-                font-size: 110px;
-            }
-
-            .love-text {
-                font-size: 38px;
-                letter-spacing: 6px;
-            }
-
-            .final-surprise-button {
-                font-size: 16px;
-                padding: 16px 40px;
-                margin-top: 30px;
-            }
-
-            .photo-placeholder {
-                font-size: 22px;
-                padding: 60px 40px;
-            }
-
-            .photo-caption {
-                font-size: 24px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .letter-container {
-                padding: 30px 25px;
-            }
-
-            .letter-text {
-                font-size: 14.5px;
-            }
-
-            .heart {
-                font-size: 90px;
-            }
-
-            .love-text {
-                font-size: 32px;
-                letter-spacing: 4px;
-            }
-
-            .final-surprise-button {
-                font-size: 15px;
-                padding: 14px 35px;
-                margin-top: 25px;
-            }
-
-            .photo-placeholder {
-                font-size: 20px;
-                padding: 50px 30px;
-            }
-
-            #photoBox {
-                cursor: pointer;
-                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            .video-container {
+                width: 95%;
+                max-width: 100%;
+                height: 65vh;
+                border-radius: 20px;
             }
             
-            #photoBox:hover {
-                transform: scale(1.03);
-                box-shadow: 0 30px 80px rgba(255, 107, 157, 0.6);
-            }
-
-
-            .photo-caption {
-                font-size: 22px;
-                margin-top: 20px;
-            }
-
-            #screen4 {
-                padding: 20px;
+            #kittyVideo {
+                border-radius: 20px;
             }
         }
 
-        @media (max-height: 700px) and (max-width: 768px) {
-            .heart {
-                font-size: 80px;
-            }
+        /* Scrollbar styling para la carta */
+        .letter-container::-webkit-scrollbar {
+            width: 6px;
+        }
 
-            .love-text {
-                font-size: 30px;
-            }
+        .letter-container::-webkit-scrollbar-track {
+            background: rgba(255, 192, 203, 0.1);
+            border-radius: 10px;
+        }
 
-            .final-surprise-button {
-                padding: 12px 30px;
-                font-size: 14px;
-                margin-top: 20px;
-            }
+        .letter-container::-webkit-scrollbar-thumb {
+            background: rgba(255, 105, 180, 0.3);
+            border-radius: 10px;
         }
     </style>
 </head>
 <body>
-    <!-- PANTALLA 1: VIDEO INTRO -->
-    <div id="screen1">
-        <div class="video-wrapper">
-            <video id="introVideo" playsinline autoplay muted preload="auto">
+    <!-- ========== PANTALLA 1: VIDEO KITTY ========== -->
+    <div class="screen active" id="screen1">
+        <div class="video-container">
+            <video id="kittyVideo" playsinline muted>
                 <source src="Video.mp4" type="video/mp4">
             </video>
-            <div class="video-text" id="videoText1">
-                Hola, tu novio me contrató<br>para dejarte el siguiente mensaje
+        </div>
+        
+        <div class="text-sequence">
+            <div class="sequence-text" id="text1">Hola hola… 👋</div>
+            <div class="sequence-text" id="text2">Tengo algo para ti, de parte de alguien que te quiere muchísimo… 💝</div>
+            <div class="sequence-text" id="text3">Mmm… ¿dónde lo puse? 🤔</div>
+            <div class="sequence-text" id="text4">¡Aquí está! Ábrelo con mucho cariño 💕</div>
+        </div>
+        
+        <div class="bottom-section">
+            <button class="btn" id="btn1">Abrir mi carta 💌</button>
+        </div>
+        
+        <div class="particles" id="particles1"></div>
+    </div>
+
+    <!-- ========== PANTALLA 2: CARTA ========== -->
+    <div class="screen" id="screen2">
+        <div class="letter-container" id="letterContainer">
+            <div class="letter-content">
+                <p class="letter-signature" style="margin-bottom: 25px;">Para mi vida ✨</p>
+                <p>Hola, amor. Te escribo esto porque a veces siento que te lo digo todo, pero nunca es suficiente para explicar lo que causas en mí. Te pienso en cada momento del día y, no te miento, extrañarte ya es parte de mi rutina; una nostalgia dulce porque sé que cada segundo de espera vale la pena si es por ti ☁️.</p>
+                <p>Últimamente, cuando escucho a Kevin Kaarl, me pierdo imaginando que el tiempo se detiene, justo como en San Lucas: "Dame tu mano, quiero caminar contigo hasta que se acabe el camino" 👣❤️. Porque contigo no tengo prisa, solo quiero estar ahí, en ese refugio que somos nosotros. Me pasa igual con Ed Maverick; a veces me quedo mudo tratando de decirte lo que siento y me acuerdo de Fuentes de Ortiz: "Dime si tú sientes lo mismo que yo siento..." 💭. Solo quiero que sepas que eres mi lugar seguro, esa persona que me hace sentir en Acurrucar que todo va a estar bien si me abrazas fuerte 🫂🥺.</p>
+                <p>Incluso cuando pongo a Bad Bunny, encuentro pedazos de lo que somos. Como en Un Coco, que dice eso de "me acuerdo de ti y se me pasa", porque eres ese pensamiento que me arregla el día, mi "sol de la mañana" ☀️. Eres mis "ojitos lindos" que no dejo de mirar aunque no estés frente a mí 👁️💖 y, como dice en De Museo, "el tiempo pasa, pero no te olvido", porque lo nuestro se siente real, de esas cosas que se quedan grabadas 🔒.</p>
+                <p>Me acordé mucho de El Cadáver de la Novia y de esa promesa: "Con esta vela, yo alumbraré tu camino" 🕯️. Me gusta pensar que nuestro amor es así, algo que no entiende de límites ni de distancias. "Tu copa nunca estará vacía, porque yo seré tu vino", y de verdad quiero ser esa persona que siempre esté ahí para ti, cuidándote y acompañándote en todo 🍷✨.</p>
+                <p>Te extraño en cada canción y en cada suspiro del día. Gracias por ser tú y por dejarme quererte de esta forma tan bonita.</p>
+                <p class="letter-signature">Te amo mucho mi vida ❤️</p>
             </div>
-            <div class="video-text" id="videoText2">
-                Déjame lo busco
+        </div>
+        <button class="btn" id="btn2" style="margin-top: 30px;">Hay algo más para ti ✨</button>
+        <div class="particles" id="particles2"></div>
+    </div>
+
+    <!-- ========== PANTALLA 3: VIDEO NOSOTROS + FLORES ========== -->
+    <div class="screen" id="screen3">
+        <div class="video-final-container">
+            <video class="video-final active" id="coupleVideo" playsinline muted>
+                <source src="Nosotros.mp4" type="video/mp4">
+            </video>
+            
+            <div class="flowers-animation" id="flowersAnimation">
+                <div class="ambient-light" style="top: 20%; left: 30%;"></div>
+                <div class="ambient-light" style="top: 60%; left: 70%; animation-delay: 2s;"></div>
+                <div class="ambient-light" style="top: 40%; left: 50%; animation-delay: 4s;"></div>
+                <div class="flower-bloom"></div>
             </div>
+            
+            <div class="final-text" id="finalText">Para siempre juntos ❤️</div>
         </div>
     </div>
 
-    <!-- PANTALLA 2: CARTA -->
-    <div id="screen2">
-        <div class="letter-container">
-            <div class="letter-text">
-                <p>Amada mía,</p>
-                <p>Este es un día especial, aunque lo cierto es que desde que estás en mi vida los días tienen algo distinto. No necesito una fecha para pensar en ti, pero hoy es una bonita excusa para decirte algunas cosas con calma.</p>
-                <p>Hay algo en ti que me da una paz difícil de explicar. Es como esos momentos en las películas donde todo parece detenerse por un instante — como si el mundo bajara el volumen — y entiendes que lo que estás viviendo es importante. Así se siente estar contigo.</p>
-                <p>A veces pienso que lo nuestro tiene algo de esas historias que parecen simples pero terminan siendo inolvidables, como Before Sunrise.</p>
-                <p>Gracias por ser tú.</p>
-                <p class="letter-signature">Te amo, mi niña hermosa ❤️</p>
-            </div>
-            <button class="surprise-button" onclick="showSurprise()">Aún queda una sorpresa más</button>
-        </div>
-    </div>
-
-    <!-- PANTALLA 3: SORPRESA FINAL -->
-    <div id="screen3">
+    <!-- ========== PANTALLA 4: FUEGOS ARTIFICIALES ========== -->
+    <div class="screen" id="screen4">
         <div class="fireworks-container" id="fireworksContainer"></div>
-        <div class="heart-container">
-            <div class="heart" id="heart">❤️</div>
-            <div class="love-text" id="loveText">TE AMO</div>
-            <button class="final-surprise-button" id="finalButton" onclick="showPhoto()">
-                Ver última sorpresa
-            </button>
-        </div>
-    </div>
-
-    <!-- PANTALLA 4: FOTO DE LA PAREJA -->
-    <div id="screen4">
-        <div class="photo-frame">
-            <!-- Input oculto -->
-            <input type="file" id="photoInput" accept="image/*" hidden>
-        
-            <!-- Recuadro clickeable -->
-            <div class="photo-placeholder" id="photoBox">
-                Toca aquí para agregar<br>una foto de ustedes ❤️
-            </div>
-        
-            <!-- Imagen real -->
-            <img id="couplePhoto" class="couple-photo" style="display:none;">
-        
-            <div class="photo-caption">Para siempre juntos 💕</div>
+        <div class="love-text" id="loveText">
+            <div class="love-heart">❤️</div>
+            <div class="love-message">Te amo</div>
         </div>
     </div>
 
     <script>
-        const video = document.getElementById('introVideo');
-        const screen1 = document.getElementById('screen1');
-        const screen2 = document.getElementById('screen2');
-        const screen3 = document.getElementById('screen3');
-        const screen4 = document.getElementById('screen4');
-        const videoText1 = document.getElementById('videoText1');
-        const videoText2 = document.getElementById('videoText2');
-        const finalButton = document.getElementById('finalButton');
+        // ========== CONFIGURACIÓN Y VARIABLES ========== 
+        const screens = {
+            screen1: document.getElementById('screen1'),
+            screen2: document.getElementById('screen2'),
+            screen3: document.getElementById('screen3'),
+            screen4: document.getElementById('screen4')
+        };
 
-        // Mostrar textos sobre el video en los tiempos específicos
-        video.addEventListener('play', () => {
-            // Primer texto: aparece al inicio y dura 2 segundos
+        const kittyVideo = document.getElementById('kittyVideo');
+        let currentScreen = 1;
+
+        // ========== FUNCIONES GENERALES ========== 
+        function switchScreen(from, to) {
+            screens[`screen${from}`].classList.remove('active');
             setTimeout(() => {
-                videoText1.classList.add('show');
+                screens[`screen${to}`].classList.add('active');
+                currentScreen = to;
             }, 100);
+        }
 
-            setTimeout(() => {
-                videoText1.classList.remove('show');
-            }, 2000);
-
-            // Segundo texto: aparece después del primero y dura 3-4 segundos
-            setTimeout(() => {
-                videoText2.classList.add('show');
-            }, 2200);
-
-            setTimeout(() => {
-                videoText2.classList.remove('show');
-            }, 6000);
-        });
-
-        // Transición del video a la carta
-        video.addEventListener('ended', () => {
-            setTimeout(() => {
-                screen1.classList.add('fade-out');
-                setTimeout(() => {
-                    screen2.classList.add('active');
-                }, 1000);
-            }, 500);
-        });
-
-        // Si el video no carga o hay error, mostrar la carta después de 7 segundos
-        setTimeout(() => {
-            if (!screen2.classList.contains('active')) {
-                screen1.classList.add('fade-out');
-                setTimeout(() => {
-                    screen2.classList.add('active');
-                }, 1000);
+        function createParticles(containerId, count = 15) {
+            const container = document.getElementById(containerId);
+            const emojis = ['💕', '💖', '✨', '💗', '🌸'];
+            
+            for (let i = 0; i < count; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 8 + 's';
+                particle.style.animationDuration = (8 + Math.random() * 4) + 's';
+                container.appendChild(particle);
             }
-        }, 7000);
-
-        // Función para mostrar la sorpresa (pantalla 3)
-        function showSurprise() {
-            screen2.classList.remove('active');
-            setTimeout(() => {
-                screen3.classList.add('active');
-                startFireworks();
-                setTimeout(() => {
-                    document.getElementById('heart').classList.add('show');
-                }, 500);
-                setTimeout(() => {
-                    document.getElementById('loveText').classList.add('show');
-                }, 2000);
-                setTimeout(() => {
-                    finalButton.classList.add('show');
-                }, 3500);
-                setTimeout(() => {
-                    stopFireworks();
-                }, 5000);
-            }, 1000);
         }
 
-        // Función para mostrar la foto (pantalla 4)
-        function showPhoto() {
-            screen3.classList.remove('active');
+        // ========== PANTALLA 1: SECUENCIA DE TEXTOS ========== 
+        function startTextSequence() {
+            const texts = [
+                { id: 'text1', delay: 500, duration: 1400 },
+                { id: 'text2', delay: 2100, duration: 1600 },
+                { id: 'text3', delay: 4000, duration: 1400 },
+                { id: 'text4', delay: 5700, duration: 2500, stay: true }
+            ];
+
+            texts.forEach(({ id, delay, duration, stay }) => {
+                setTimeout(() => {
+                    const element = document.getElementById(id);
+                    element.classList.add('show');
+                    
+                    if (!stay) {
+                        setTimeout(() => {
+                            element.classList.remove('show');
+                        }, duration);
+                    }
+                }, delay);
+            });
+
+            // Mostrar botón después de la secuencia completa
             setTimeout(() => {
-                screen4.classList.add('active');
-            }, 1000);
+                document.getElementById('btn1').classList.add('show');
+            }, 8500);
         }
 
-        // Sistema de fuegos artificiales
-        let fireworksInterval;
+        // ========== PANTALLA 2: ANIMACIÓN DE CARTA ========== 
+        function showLetter() {
+            const letterContainer = document.getElementById('letterContainer');
+            const paragraphs = document.querySelectorAll('.letter-content p');
+            
+            setTimeout(() => {
+                letterContainer.classList.add('show');
+                
+                paragraphs.forEach((p, index) => {
+                    setTimeout(() => {
+                        p.classList.add('show');
+                    }, 600 + (index * 400));
+                });
+            }, 300);
+        }
 
-        function createFirework() {
+        // ========== PANTALLA 3: FUEGOS ARTIFICIALES ========== 
+        function createFirework(x, y) {
+            const colors = ['#FFD700', '#FFFFFF', '#FFC0CB', '#FFE5B4'];
+            const particles = 30;
             const container = document.getElementById('fireworksContainer');
-            const colors = ['#ff6b9d', '#ff8fab', '#ffa5c0', '#ffb8d1', '#ffc8dc', '#ffd4e5'];
-            
-            const centerX = window.innerWidth / 2;
-            const centerY = window.innerHeight / 2;
-            
-            const startX = centerX + (Math.random() - 0.5) * 200;
-            const startY = centerY + (Math.random() - 0.5) * 200;
-            
-            for (let i = 0; i < 30; i++) {
-                const firework = document.createElement('div');
-                firework.className = 'firework';
-                firework.style.left = startX + 'px';
-                firework.style.top = startY + 'px';
-                firework.style.background = colors[Math.floor(Math.random() * colors.length)];
+
+            for (let i = 0; i < particles; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'firework';
+                particle.style.left = x + 'px';
+                particle.style.top = y + 'px';
+                particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
                 
-                const angle = (Math.PI * 2 * i) / 30;
+                const angle = (Math.PI * 2 * i) / particles;
                 const velocity = 100 + Math.random() * 100;
-                const x = Math.cos(angle) * velocity;
-                const y = Math.sin(angle) * velocity;
+                const vx = Math.cos(angle) * velocity;
+                const vy = Math.sin(angle) * velocity;
                 
-                firework.style.setProperty('--x', x + 'px');
-                firework.style.setProperty('--y', y + 'px');
+                container.appendChild(particle);
                 
-                container.appendChild(firework);
-                
-                setTimeout(() => {
-                    firework.remove();
-                }, 2000);
+                animateFireworkParticle(particle, vx, vy);
             }
+        }
+
+        function animateFireworkParticle(particle, vx, vy) {
+            let x = parseFloat(particle.style.left);
+            let y = parseFloat(particle.style.top);
+            let opacity = 1;
+            let life = 0;
+            const maxLife = 60;
+            const gravity = 2;
+
+            function update() {
+                life++;
+                x += vx * 0.03;
+                y += vy * 0.03 + gravity * 0.05;
+                opacity = 1 - (life / maxLife);
+                
+                particle.style.left = x + 'px';
+                particle.style.top = y + 'px';
+                particle.style.opacity = opacity;
+                
+                if (life < maxLife) {
+                    requestAnimationFrame(update);
+                } else {
+                    particle.remove();
+                }
+            }
+            
+            particle.style.opacity = 1;
+            update();
         }
 
         function startFireworks() {
-            createFirework();
-            fireworksInterval = setInterval(createFirework, 400);
+            const loveText = document.getElementById('loveText');
+            setTimeout(() => loveText.classList.add('show'), 500);
+
+            const fireworkPositions = [
+                { delay: 300, x: window.innerWidth * 0.2, y: window.innerHeight * 0.3 },
+                { delay: 800, x: window.innerWidth * 0.8, y: window.innerHeight * 0.25 },
+                { delay: 1400, x: window.innerWidth * 0.5, y: window.innerHeight * 0.2 },
+                { delay: 2000, x: window.innerWidth * 0.3, y: window.innerHeight * 0.4 },
+                { delay: 2500, x: window.innerWidth * 0.7, y: window.innerHeight * 0.35 },
+                { delay: 3200, x: window.innerWidth * 0.5, y: window.innerHeight * 0.3 }
+            ];
+
+            fireworkPositions.forEach(({ delay, x, y }) => {
+                setTimeout(() => createFirework(x, y), delay);
+            });
         }
 
-        function stopFireworks() {
-            clearInterval(fireworksInterval);
+        // ========== PANTALLA 3: VIDEO + ANIMACIÓN DE FLORES ========== 
+        function startFinalVideos() {
+            const coupleVideo = document.getElementById('coupleVideo');
+            const flowersAnimation = document.getElementById('flowersAnimation');
+            const finalText = document.getElementById('finalText');
+
+            // Iniciar video
+            coupleVideo.play().catch((err) => {
+                console.log('Video autoplay bloqueado:', err);
+            });
+
+            // Iniciar flores inmediatamente (no esperar a que termine el video)
+            setTimeout(() => {
+                flowersAnimation.classList.add('active');
+                startFlowersAnimation();
+                
+                // Mostrar texto final
+                setTimeout(() => {
+                    finalText.classList.add('show');
+                }, 2500);
+            }, 1000);
+
+            // Cuando termine el video, pasar a fuegos artificiales
+            coupleVideo.addEventListener('ended', () => {
+                setTimeout(() => {
+                    switchScreen(3, 4);
+                    startFireworks();
+                }, 1000);
+            }, { once: true });
         }
 
-        // Prevenir scroll en móvil
-        document.body.addEventListener('touchmove', function(e) {
-            if (e.target === document.body) {
+        // ========== ANIMACIÓN DE PÉTALOS ETÉREA ========== 
+        function startFlowersAnimation() {
+            const container = document.getElementById('flowersAnimation');
+            const petalTypes = ['petal-rose', 'petal-cherry', 'petal-sakura', 'petal-small'];
+            const totalPetals = 12;
+            
+            console.log('Iniciando animación de flores...'); // Debug
+            
+            function createPetal() {
+                const petal = document.createElement('div');
+                petal.className = 'petal';
+                
+                const petalType = petalTypes[Math.floor(Math.random() * petalTypes.length)];
+                const petalShape = document.createElement('div');
+                petalShape.className = petalType;
+                petal.appendChild(petalShape);
+                
+                const startX = Math.random() * 100;
+                petal.style.left = startX + '%';
+                
+                const duration = 18 + Math.random() * 12;
+                petal.style.animation = `floatPetal ${duration}s ease-in-out forwards`;
+                
+                const delay = Math.random() * 10;
+                petal.style.animationDelay = delay + 's';
+                
+                container.appendChild(petal);
+                
+                setTimeout(() => {
+                    petal.remove();
+                }, (duration + delay) * 1000);
+            }
+            
+            for (let i = 0; i < totalPetals; i++) {
+                setTimeout(() => {
+                    createPetal();
+                }, i * 1000);
+            }
+            
+            setInterval(() => {
+                if (document.querySelectorAll('.petal').length < totalPetals) {
+                    createPetal();
+                }
+            }, 4000);
+        }
+
+        // ========== BOTONES DE NAVEGACIÓN ========== 
+        document.getElementById('btn1').addEventListener('click', () => {
+            switchScreen(1, 2);
+            showLetter();
+        });
+
+        document.getElementById('btn2').addEventListener('click', () => {
+            switchScreen(2, 3);
+            setTimeout(startFinalVideos, 500);
+        });
+
+        // ========== INICIALIZACIÓN ========== 
+        window.addEventListener('load', () => {
+            kittyVideo.play();
+            startTextSequence();
+            createParticles('particles1', 12);
+            createParticles('particles2', 12);
+        });
+
+        document.body.addEventListener('touchmove', (e) => {
+            if (!e.target.closest('.letter-container')) {
                 e.preventDefault();
             }
         }, { passive: false });
-        // Forzar reproducción en GitHub Pages / móviles
-        window.addEventListener('load', () => {
-            video.muted = true;
-            video.play().catch(() => {
-                // Si el navegador bloquea autoplay, al tocar la pantalla inicia
-                document.body.addEventListener('click', () => video.play(), { once: true });
-            });
-        });
-        const photoInput = document.getElementById('photoInput');
-        const photoBox = document.getElementById('photoBox');
-        const couplePhoto = document.getElementById('couplePhoto');
-        
-        // abrir selector
-        photoBox.addEventListener('click', () => {
-            photoInput.click();
-        });
-        
-        // mostrar imagen
-        photoInput.addEventListener('change', function() {
-            const file = this.files[0];
-            if (!file) return;
-        
-            const reader = new FileReader();
-        
-            reader.onload = function(e) {
-                couplePhoto.src = e.target.result;
-                couplePhoto.style.display = 'block';
-                photoBox.style.display = 'none';
-            };
-        
-            reader.readAsDataURL(file);
-        });
-
     </script>
 </body>
 </html>
-
-
-
